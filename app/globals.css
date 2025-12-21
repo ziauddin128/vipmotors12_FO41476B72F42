@@ -5,6 +5,8 @@
 
 @theme inline {
   --color-Primary-Color: #b59945;
+  --color-White-Gray-Color: #e5e5e5;
+  --color-White-Color: #fbfbfb;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

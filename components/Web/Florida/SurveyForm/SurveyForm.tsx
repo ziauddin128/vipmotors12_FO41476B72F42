@@ -89,7 +89,7 @@ export default function SurveyForm() {
           "zip-code": data.zipcode,
           "budget-range":
             data.budget === "Other" ? data.budgetOther : data.budget,
-          "credit-score": data.creditRange,
+          "credit-score-range": data.creditRange,
         },
         vehicle: {
           name: data.carType,

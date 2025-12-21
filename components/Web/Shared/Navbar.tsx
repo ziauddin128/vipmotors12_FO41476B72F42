@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 
@@ -12,7 +13,7 @@ export const menuLink = [
     value: "/Inventory",
   },
   {
-    label: "How It WorK",
+    label: "How It Work",
     value: "/how-it-work",
   },
   {
@@ -22,6 +23,8 @@ export const menuLink = [
 ];
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <section className="fixed z-2  top-0 left-0 w-full bg-[#7F664B] lg:bg-[rgba(204,165,49,0.10)] shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5">
       <div className="custom-container-2">
@@ -55,7 +58,7 @@ export default function Navbar() {
           </Link>
 
           {/* Mobile Menu */}
-          <MobileNav />
+          <MobileNav isMobileMenuOpen={isMobileMenuOpen} />
         </div>
       </div>
     </section>
