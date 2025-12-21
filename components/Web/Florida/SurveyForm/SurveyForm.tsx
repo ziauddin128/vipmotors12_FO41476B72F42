@@ -78,25 +78,55 @@ export default function SurveyForm() {
   // Form Submission
   const onSubmit = async (data: FormDataType) => {
     try {
-      console.log("Submitting:", data);
+      // console.log("Submitting:", data);
 
-      /*  await fetch("/api/survey", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }); */
+      const formattedData = {
+        contact: {
+          fullname: data.fullName,
+          email: data.email,
+          phone: data.phoneNumber,
+          location: data.state === "Other" ? data.otherState : data.state,
+          "zip-code": data.zipcode,
+          "budget-range":
+            data.budget === "Other" ? data.budgetOther : data.budget,
+          "credit-score": data.creditRange,
+        },
+        vehicle: {
+          name: data.carType,
+        },
+      };
 
-      Swal.fire({
-        title: "Success!",
-        text: " Thank you for taking the time to complete our survey!",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
+      // console.log("Formatted data:", formattedData);
 
-      // Reset form
-      reset();
-      // Redirect to first step
-      setCurrent(0);
+      const response = await fetch(
+        "https://services.leadconnectorhq.com/hooks/HrhbwxyklwA3rFb1WupM/webhook-trigger/12bea01a-17b6-4208-9570-bcd50e60e121",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formattedData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          title: "Success!",
+          text: "Thank you for taking the time to complete our survey!",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+
+        reset();
+        setCurrent(0);
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: result.message || "Something went wrong. Please try again.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     } catch (err) {
       console.error(err);
     }
