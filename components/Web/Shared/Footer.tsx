@@ -1,9 +1,23 @@
 import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import Facebook from "@/components/Icons/Facebook";
+import Instagram from "@/components/Icons/Instagram";
+import Twitter from "@/components/Icons/Twitter";
+import Telegram from "@/components/Icons/Telegram";
+
+interface UsefulLink {
+  label: string;
+  value: string;
+}
+
+interface SocialLink {
+  icon: React.ReactNode;
+  link: string;
+}
 
 export default function Footer() {
-  const usefulLink = [
+  const usefulLink: UsefulLink[] = [
     {
       label: "Home",
       value: "/home",
@@ -25,6 +39,26 @@ export default function Footer() {
       value: "/testimonials",
     },
   ];
+
+  const socialLink: SocialLink[] = [
+    {
+      icon: <Facebook className="fill-Primary-Color" />,
+      link: "#",
+    },
+    {
+      icon: <Instagram className="fill-Primary-Color" />,
+      link: "https://www.instagram.com/vipmotorsmi/",
+    },
+    {
+      icon: <Twitter className="fill-Primary-Color" />,
+      link: "#",
+    },
+    {
+      icon: <Telegram className="fill-Primary-Color" />,
+      link: "#",
+    },
+  ];
+
   return (
     <div
       className="py-12 bg-cover bg-center"
@@ -32,7 +66,7 @@ export default function Footer() {
     >
       <div className="custom-container-2">
         {/* Top */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-10 md:gap-6">
           <div className="flex flex-col gap-6">
             <img
               src="/images/logo.svg"
@@ -52,7 +86,7 @@ export default function Footer() {
                 href="tel:+14161234567"
                 className="flex items-center gap-3 text-[#FBFBFB]"
               >
-                <div className="w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
+                <div className="min-w-10 w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
                   <Phone className="h-5 w-5" />
                 </div>
                 <span>+1 (416) 123-4567</span>
@@ -62,7 +96,7 @@ export default function Footer() {
                 href="mailto:info@vipmotors.com"
                 className="flex items-center gap-3 text-[#FBFBFB]"
               >
-                <div className="w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
+                <div className="min-w-10 w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
                   <Mail className="h-5 w-5" />
                 </div>
                 <span>info@vipmotors.com</span>
@@ -72,7 +106,7 @@ export default function Footer() {
                 href="https://www.google.com/maps/place/VIP+Motors/@42.4699702,-83.2394343,15z/data=!4m6!3m5!1s0x8824c9f277094ea7:0x85d43be7537a149e!8m2!3d42.4699702!4d-83.2394343!16s%2Fg%2F11p3g2mc_d?entry=ttu"
                 className="flex items-center gap-3 text-[#FBFBFB]"
               >
-                <div className="w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
+                <div className="min-w-10 w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <span>
@@ -81,7 +115,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <div className="flex justify-center border-l border-r border-[#E5E5E54D]">
+          <div className="md:flex md:justify-center md:border-l md:border-r md:border-[#E5E5E54D]">
             <div className="flex flex-col gap-6">
               <h2 className="text-White-Color text-xl font-medium">
                 Useful Links
@@ -109,12 +143,12 @@ export default function Footer() {
 
             <div className="p-2 bg-White-Color rounded flex">
               <input
-                className="flex-1 border-0 outline-0 px-4"
+                className="flex-1 w-full border-0 outline-0 px-4"
                 placeholder="Your email address"
                 type="text"
                 name=""
               />
-              <button className="w-fit bg-Primary-Color text-white text-lg py-2.5 px-4 rounded">
+              <button className="w-fit bg-Primary-Color text-white text-base md:text-lg py-2.5 px-4 rounded">
                 Subscribe
               </button>
             </div>
@@ -130,7 +164,31 @@ export default function Footer() {
           </div>
         </div>
         {/* Footer */}
-        <div></div>
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-6 pt-6 border-t border-[#E5E5E54D]">
+          <div>
+            <p className="text-base text-White-Color">
+              © Copyright 2025{" "}
+              <Link
+                href="https://vipmotors.com/"
+                className="text-Primary-Color"
+              >
+                VIP Motors
+              </Link>{" "}
+              All Rights Reserved.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {socialLink.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.link}
+                className="h-8 w-8 rounded-full bg-White-Color flex items-center justify-center"
+              >
+                {item.icon}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
