@@ -23,8 +23,14 @@ export const menuLink = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [scrolled, setScrolled] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.scrollY > 10;
+    }
+    return false;
+  });
 
   // On scroll set background color
   useEffect(() => {
@@ -38,7 +44,7 @@ export default function Navbar() {
 
   return (
     <section
-      className={`fixed z-2  top-0 left-0 w-full ${
+      className={`fixed z-2  top-0 left-0 w-full  ${
         scrolled ? "bg-[#7F664B]" : "bg-[rgba(204,165,49,0.10)]"
       }   shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5`}
     >

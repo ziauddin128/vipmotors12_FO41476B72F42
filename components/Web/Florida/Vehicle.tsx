@@ -23,7 +23,7 @@ interface CarList {
 }
 
 export default function Vehicle() {
-  const [activeBrand, setActiveBrand] = useState(0);
+  const [activeBrand, setActiveBrand] = useState("BMW");
 
   // Car Model
   const carBrand: CarBrand[] = [
@@ -90,10 +90,10 @@ export default function Vehicle() {
       model: 2025,
     },
 
-    // Audi
+    // Cadillac Escalades
     {
       id: 4,
-      brand: "Audi",
+      brand: "Cadillac Escalades",
       image: "car-1.png",
       title: "Audi Q7",
       gearBox: "Automatic",
@@ -103,7 +103,7 @@ export default function Vehicle() {
     },
     {
       id: 5,
-      brand: "Audi",
+      brand: "Cadillac Escalades",
       image: "car-2.png",
       title: "Audi A6",
       gearBox: "Manual",
@@ -113,7 +113,7 @@ export default function Vehicle() {
     },
     {
       id: 6,
-      brand: "Audi",
+      brand: "Cadillac Escalades",
       image: "car-3.png",
       title: "Audi e-tron",
       gearBox: "Automatic",
@@ -125,7 +125,7 @@ export default function Vehicle() {
     // Mercedes
     {
       id: 7,
-      brand: "Mercedes",
+      brand: "Mercedes-Benz",
       image: "car-1.png",
       title: "Mercedes GLE",
       gearBox: "Automatic",
@@ -135,7 +135,7 @@ export default function Vehicle() {
     },
     {
       id: 8,
-      brand: "Mercedes",
+      brand: "Mercedes-Benz",
       image: "car-2.png",
       title: "Mercedes C-Class",
       gearBox: "Manual",
@@ -145,7 +145,7 @@ export default function Vehicle() {
     },
     {
       id: 9,
-      brand: "Mercedes",
+      brand: "Mercedes-Benz",
       image: "car-3.png",
       title: "Mercedes EQB",
       gearBox: "Automatic",
@@ -153,7 +153,177 @@ export default function Vehicle() {
       seat: 5,
       model: 2025,
     },
+
+    // Tahoes
+    {
+      id: 10,
+      brand: "Tahoes",
+      image: "car-1.png",
+      title: "Tahoe LS",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2025,
+    },
+    {
+      id: 11,
+      brand: "Tahoes",
+      image: "car-2.png",
+      title: "Tahoe LT",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2024,
+    },
+    {
+      id: 12,
+      brand: "Tahoes",
+      image: "car-3.png",
+      title: "Tahoe Premier",
+      gearBox: "Manual",
+      type: "SUV",
+      seat: 8,
+      model: 2025,
+    },
+    {
+      id: 13,
+      brand: "Tahoes",
+      image: "car-4.png",
+      title: "Tahoe Z71",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2023,
+    },
+
+    // GMC Sierras
+    {
+      id: 14,
+      brand: "GMC Sierras",
+      image: "car-1.png",
+      title: "GMC Sierra SLE",
+      gearBox: "Automatic",
+      type: "Truck",
+      seat: 5,
+      model: 2025,
+    },
+    {
+      id: 15,
+      brand: "GMC Sierras",
+      image: "car-2.png",
+      title: "GMC Sierra SLT",
+      gearBox: "Automatic",
+      type: "Truck",
+      seat: 5,
+      model: 2024,
+    },
+    {
+      id: 16,
+      brand: "GMC Sierras",
+      image: "car-3.png",
+      title: "GMC Sierra Denali",
+      gearBox: "Automatic",
+      type: "Truck",
+      seat: 5,
+      model: 2025,
+    },
+    {
+      id: 17,
+      brand: "GMC Sierras",
+      image: "car-4.png",
+      title: "GMC Sierra AT4",
+      gearBox: "Automatic",
+      type: "Truck",
+      seat: 5,
+      model: 2023,
+    },
+
+    // Range Rover
+    {
+      id: 18,
+      brand: "Range Rover",
+      image: "car-1.png",
+      title: "Range Rover Evoque",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 5,
+      model: 2025,
+    },
+    {
+      id: 19,
+      brand: "Range Rover",
+      image: "car-2.png",
+      title: "Range Rover Velar",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 5,
+      model: 2024,
+    },
+    {
+      id: 20,
+      brand: "Range Rover",
+      image: "car-3.png",
+      title: "Range Rover Sport",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2025,
+    },
+    {
+      id: 21,
+      brand: "Range Rover",
+      image: "car-4.png",
+      title: "Range Rover Autobiography",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2023,
+    },
+
+    // Tesla
+    {
+      id: 22,
+      brand: "Tesla",
+      image: "car-1.png",
+      title: "Tesla Model S",
+      gearBox: "Automatic",
+      type: "Sedan",
+      seat: 5,
+      model: 2025,
+    },
+    {
+      id: 23,
+      brand: "Tesla",
+      image: "car-2.png",
+      title: "Tesla Model 3",
+      gearBox: "Automatic",
+      type: "Sedan",
+      seat: 5,
+      model: 2024,
+    },
+    {
+      id: 24,
+      brand: "Tesla",
+      image: "car-3.png",
+      title: "Tesla Model X",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 7,
+      model: 2025,
+    },
+    {
+      id: 25,
+      brand: "Tesla",
+      image: "car-4.png",
+      title: "Tesla Model Y",
+      gearBox: "Automatic",
+      type: "SUV",
+      seat: 5,
+      model: 2023,
+    },
   ];
+
+  const filteredCars = carList.filter((car) => car.brand === activeBrand);
 
   //  Scroll Filter By Grab
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -182,11 +352,11 @@ export default function Vehicle() {
   const onMouseLeave = () => setIsDragging(false);
 
   return (
-    <section className="py-30">
+    <section className="py-20 lg:py-30">
       <div className="custom-container-2">
         {/* Title */}
         <div className="max-w-250 w-full mx-auto text-center space-y-2">
-          <h1 className="text-[48px] font-semibold">
+          <h1 className="text-[38px] md:text-[48px] font-semibold">
             Featured <span className="text-Primary-Color">Vehicle</span> Deals
           </h1>
           <p className="text-base md:text-lg">
@@ -203,13 +373,13 @@ export default function Vehicle() {
           onMouseUp={onMouseUp}
           onMouseMove={onMouseMove}
         >
-          {carBrand.map((item, idx) => (
+          {carBrand.map((item) => (
             <button
-              key={idx}
+              key={item.value}
+              onClick={() => setActiveBrand(item.value)}
               className={`text-base font-medium whitespace-nowrap  ${
-                activeBrand === idx ? "bg-Primary-Color text-white" : ""
+                activeBrand === item.value ? "bg-Primary-Color text-white" : ""
               }  py-2.5 px-5 rounded-lg cursor-pointer`}
-              onClick={() => setActiveBrand(idx)}
             >
               {item.label}
             </button>
@@ -219,53 +389,59 @@ export default function Vehicle() {
         {/* Car List */}
         <div className="mt-12">
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Car Card */}
-            <div className="p-4 pb-6 rounded-2xl border border-White-Gray-Color bg-White-Color flex flex-col gap-4">
-              <img
-                src="/images/car-1.png"
-                className="w-full rounded-lg"
-                alt="Car"
-              />
+            {filteredCars.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-4 pb-6 rounded-2xl border border-White-Gray-Color bg-White-Color flex flex-col justify-between gap-4"
+              >
+                <img
+                  src={`/images/${item.image}`}
+                  className="w-full rounded-lg"
+                  alt={item.title}
+                />
 
-              <div className="space-y-3">
-                <h1 className="text-xl font-medium">BMW X7</h1>
+                <div className="space-y-3 flex-1">
+                  <h1 className="text-xl font-medium">{item.title}</h1>
 
-                <div className="grid grid-cols-[auto_auto] gap-4">
-                  <div className="flex gap-2">
-                    <GearBox />
-                    <span className="text-sm text-Gray-Color">
-                      Gearbox : Automatic
-                    </span>
-                  </div>
+                  <div className="grid grid-cols-[auto_auto] gap-4">
+                    <div className="flex gap-2">
+                      <GearBox />
+                      <span className="text-sm text-Gray-Color">
+                        Gearbox : {item.gearBox}
+                      </span>
+                    </div>
 
-                  <div className="flex gap-2">
-                    <Wheel />
-                    <span className="text-sm text-Gray-Color">Type: SUV</span>
-                  </div>
+                    <div className="flex gap-2">
+                      <Wheel />
+                      <span className="text-sm text-Gray-Color">
+                        Type: {item.type}
+                      </span>
+                    </div>
 
-                  <div className="flex gap-2">
-                    <Seat />
-                    <span className="text-sm text-Gray-Color">
-                      Seats: 7 people
-                    </span>
-                  </div>
+                    <div className="flex gap-2">
+                      <Seat />
+                      <span className="text-sm text-Gray-Color">
+                        Seats: {item.seat} people
+                      </span>
+                    </div>
 
-                  <div className="flex gap-2">
-                    <Car />
-                    <span className="text-sm text-Gray-Color">
-                      Model : 2025
-                    </span>
+                    <div className="flex gap-2">
+                      <Car />
+                      <span className="text-sm text-Gray-Color">
+                        Model : {item.model}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <Link
-                href="#"
-                className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200"
-              >
-                Start Free Consultation
-              </Link>
-            </div>
+                <Link
+                  href="tel:01521454545"
+                  className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200"
+                >
+                  Start Free Consultation
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -99,7 +99,7 @@ export default function SurveyForm() {
       // console.log("Formatted data:", formattedData);
 
       const response = await fetch(
-        "https://services.leadconnectorhq.com/hooks/HrhbwxyklwA3rFb1WupM/webhook-trigger/12bea01a-17b6-4208-9570-bcd50e60e121",
+        "https://services.leadconnectorhq.com/hooks/N5ckr1LzkF1akGRPJvlC/webhook-trigger/702a517b-6808-481e-8179-3bc64a02d38e",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -134,7 +134,14 @@ export default function SurveyForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && current < steps.length - 1) {
+            e.preventDefault();
+          }
+        }}
+      >
         <div className="flex justify-end">
           <div className="bg-white max-w-[585px] w-full rounded overflow-hidden pb-6">
             {/* Headline */}
@@ -157,7 +164,7 @@ export default function SurveyForm() {
               {current > 0 && (
                 <Button
                   onClick={prev}
-                  className={`w-full sm:w-fit font-normal! bg-white! py-2! px-4! h-12! outline-0! rounded! text-lg! text-Primary-Color! border-Primary-Color!`}
+                  className={`w-full sm:w-fit cursor-pointer flex items-center justify-center font-normal! bg-white! py-2! px-4! h-12! outline-0! rounded! text-lg! text-Primary-Color! border-Primary-Color!`}
                 >
                   <ArrowLeft />
                   <span>Previous </span>
@@ -166,14 +173,13 @@ export default function SurveyForm() {
               {current < steps.length - 1 ? (
                 <>
                   <div></div>
-                  <Button
-                    type="primary"
+                  <button
                     onClick={next}
-                    className={`w-full sm:w-fit font-normal! bg-Primary-Color! py-2! px-4! h-12! outline-0! border-0! rounded! text-lg! text-white!`}
+                    className={`w-full sm:w-fit cursor-pointer flex items-center justify-center font-normal! bg-Primary-Color! py-2! px-4! h-12! outline-0! border-0! rounded! text-lg! text-white!`}
                   >
                     <span>Next</span>
                     <ArrowRight />
-                  </Button>
+                  </button>
                 </>
               ) : (
                 <button
