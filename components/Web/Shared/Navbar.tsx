@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 
@@ -23,10 +23,25 @@ export const menuLink = [
 ];
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // On scroll set background color
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="fixed z-2  top-0 left-0 w-full bg-[#7F664B] lg:bg-[rgba(204,165,49,0.10)] shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5">
+    <section
+      className={`fixed z-2  top-0 left-0 w-full ${
+        scrolled ? "bg-[#7F664B]" : "bg-[rgba(204,165,49,0.10)]"
+      }   shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5`}
+    >
       <div className="custom-container-2">
         <div className="flex justify-between items-center gap-4">
           <Link href="/">

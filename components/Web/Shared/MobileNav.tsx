@@ -26,7 +26,7 @@ export default function MobileNav({
         {/* Close Button */}
         <SheetClose asChild>
           <button
-            className="cursor-pointer absolute top-4 right-4 h-10 w-10 p-2.5 rounded-full flex items-center justify-center bg-Primary-Color!"
+            className="cursor-pointer absolute top-4 right-4 h-8 w-8 p-1.5 rounded-full flex items-center justify-center bg-red-400"
             onClick={() => !isMobileMenuOpen}
           >
             <X className="text-white" />
