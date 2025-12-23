@@ -211,3 +211,12 @@
     left: 50% !important;
   }
 }
+
+/* Custom Contact Input */
+.contact-label {
+  @apply text-base font-medium mb-3;
+}
+
+.custom-input {
+  @apply h-12 py-3 px-4 rounded bg-white border border-White-Gray-Color text-base focus-visible:ring-0 focus-visible:shadow-none;
+}
