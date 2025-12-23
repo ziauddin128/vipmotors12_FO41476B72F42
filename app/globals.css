@@ -5,6 +5,9 @@
 
 @theme inline {
   --color-Primary-Color: #b59945;
+  --color-White-Gray-Color: #e5e5e5;
+  --color-White-Color: #fbfbfb;
+  --color-Gray-Color: #3a3a3a;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -50,6 +53,10 @@
 
 .custom-container {
   @apply max-w-[1360px] w-full mx-auto px-4;
+}
+
+.custom-container-2 {
+  @apply max-w-[1600px] w-full mx-auto px-4;
 }
 
 :root {
@@ -138,4 +145,78 @@
 /* Custom Accent */
 .custom-accent svg {
   @apply fill-Primary-Color! border-0! h-2.5! w-2.5! stroke-transparent!;
+}
+
+/* Error Msg */
+.error-msg {
+  @apply text-sm text-red-500 mt-1;
+}
+
+/* Custom Swiper JS bullet */
+.swiper-pagination {
+  @apply absolute bottom-10!;
+}
+
+.swiper-pagination-bullet {
+  @apply w-3! h-3! bg-white! opacity-[1]! rounded-full!;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-Primary-Color! w-9! rounded-xl!;
+}
+
+.swiper-horizontal .swiper-button-prev,
+.swiper-horizontal .swiper-button-next,
+.swiper-horizontal ~ .swiper-button-prev,
+.swiper-horizontal ~ .swiper-button-next {
+  top: 90% !important;
+  height: 40px !important;
+  width: 40px !important;
+  background-color: var(--color-White-Color) !important;
+  border: 1px solid var(--color-White-Gray-Color) !important;
+  border-radius: 50%;
+}
+
+.swiper-horizontal .swiper-button-prev svg,
+.swiper-horizontal .swiper-button-next svg,
+.swiper-horizontal ~ .swiper-button-prev svg,
+.swiper-horizontal ~ .swiper-button-next svg {
+  height: 20px !important;
+  width: 20px !important;
+  fill: var(--color-Primary-Color) !important;
+  color: var(--color-Primary-Color) !important;
+}
+
+.swiper-horizontal .swiper-button-prev {
+  right: 60px !important;
+  margin-left: auto !important;
+}
+
+@media (max-width: 767px) {
+  .swiper-horizontal .swiper-button-prev,
+  .swiper-horizontal .swiper-button-next,
+  .swiper-horizontal ~ .swiper-button-prev,
+  .swiper-horizontal ~ .swiper-button-next {
+    margin-left: auto !important;
+    right: auto !important;
+  }
+
+  .swiper-horizontal .swiper-button-prev {
+    right: auto !important;
+    left: 30% !important;
+  }
+
+  .swiper-horizontal .swiper-button-next {
+    right: auto !important;
+    left: 50% !important;
+  }
+}
+
+/* Custom Contact Input */
+.contact-label {
+  @apply text-base font-medium mb-3;
+}
+
+.custom-input {
+  @apply h-12 py-3 px-4 rounded bg-white border border-White-Gray-Color text-base focus-visible:ring-0 focus-visible:shadow-none;
 }

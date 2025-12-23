@@ -1,29 +1,54 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import MobileNav from "./MobileNav";
+
+export const menuLink = [
+  {
+    label: "Home",
+    value: "/home",
+  },
+  {
+    label: "Inventory",
+    value: "/Inventory",
+  },
+  {
+    label: "How It Work",
+    value: "/how-it-work",
+  },
+  {
+    label: "Contact Us",
+    value: "/contact-us",
+  },
+];
 
 export default function Navbar() {
-  const menuLink = [
-    {
-      label: "Home",
-      value: "/home",
-    },
-    {
-      label: "Inventory",
-      value: "/Inventory",
-    },
-    {
-      label: "How It WorK",
-      value: "/how-it-work",
-    },
-    {
-      label: "Contact Us",
-      value: "/contact-us",
-    },
-  ];
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [scrolled, setScrolled] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.scrollY > 10;
+    }
+    return false;
+  });
+
+  // On scroll set background color
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section className="fixed top-0 left-0 w-full bg-[rgba(204,165,49,0.10)] shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5">
-      <div className="custom-container">
+    <section
+      className={`fixed z-2  top-0 left-0 w-full  ${
+        scrolled ? "bg-[#7F664B]" : "bg-[rgba(204,165,49,0.10)]"
+      }   shadow-[0_0_2px_rgba(0,0,0,0.20)] py-2.5`}
+    >
+      <div className="custom-container-2">
         <div className="flex justify-between items-center gap-4">
           <Link href="/">
             <img
@@ -32,7 +57,7 @@ export default function Navbar() {
               alt="Logo"
             />
           </Link>
-          <div>
+          <div className="hidden lg:block">
             <ul className="flex items-center gap-12.5">
               {menuLink.map((item, idx) => (
                 <li key={idx}>
@@ -48,10 +73,13 @@ export default function Navbar() {
           </div>
           <Link
             href="#"
-            className="py-3 px-6 rounded bg-Primary-Color text-white text-lg font-medium"
+            className="hidden lg:block py-3 px-6 rounded bg-Primary-Color text-white text-lg font-medium hover:opacity-[.9]"
           >
             Start Free Consultation
           </Link>
+
+          {/* Mobile Menu */}
+          <MobileNav isMobileMenuOpen={isMobileMenuOpen} />
         </div>
       </div>
     </section>
