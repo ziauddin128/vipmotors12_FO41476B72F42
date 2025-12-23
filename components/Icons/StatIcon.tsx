@@ -1,0 +1,19 @@
+import React from "react";
+
+export default function StatIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="23"
+      height="22"
+      viewBox="0 0 23 22"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M11.4127 0L14.1068 8.2918H22.8253L15.7719 13.4164L18.4661 21.7082L11.4127 16.5836L4.35924 21.7082L7.0534 13.4164L-1.90735e-05 8.2918H8.71849L11.4127 0Z"
+        fill="#B59945"
+      />
+    </svg>
+  );
+}

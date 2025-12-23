@@ -8,8 +8,8 @@ import { Pagination, EffectFade, Autoplay } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import Link from "next/link";
 import "swiper/css/effect-fade";
+import Link from "next/link";
 
 export default function Hero() {
   return (
