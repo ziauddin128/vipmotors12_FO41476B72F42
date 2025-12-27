@@ -32,7 +32,7 @@ export default function Florida() {
     <section
       className="min-h-screen bg-cover bg-center"
       style={{
-        backgroundImage: `url(${bg})`,
+        backgroundImage: `url('/images/home-bg.png')`,
       }}
     >
       <div className="custom-container min-h-screen flex flex-col gap-16 justify-between pt-12 pb-30 sm:pb-8">
@@ -85,7 +85,7 @@ export default function Florida() {
       <Call />
 
       {/* SWIPER */}
-      <Swiper
+      {/* <Swiper
         modules={[Autoplay, EffectFade]}
         effect="fade"
         autoplay={{
@@ -103,7 +103,7 @@ export default function Florida() {
         {backgrounds.map((_, index) => (
           <SwiperSlide key={index} />
         ))}
-      </Swiper>
+      </Swiper> */}
     </section>
   );
 }
