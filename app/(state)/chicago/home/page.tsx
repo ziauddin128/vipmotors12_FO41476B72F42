@@ -18,7 +18,7 @@ export default function ChicagoHome() {
       <Testimonial />
       <Contact />
       <Footer />
-      <Call />
+      {/* <Call /> */}
     </>
   );
 }

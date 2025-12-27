@@ -18,7 +18,7 @@ export default function FloridaHome() {
       <Testimonial />
       <Contact />
       <Footer />
-      <Call />
+      {/* <Call /> */}
     </>
   );
 }
