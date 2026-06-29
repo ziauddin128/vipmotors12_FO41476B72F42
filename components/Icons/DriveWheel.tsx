@@ -10,7 +10,7 @@ export default function DriveWheel({ className }: { className?: string }) {
       fill="none"
       className={className}
     >
-      <g clip-path="url(#clip0_3266_846)">
+      <g clipPath="url(#clip0_3266_846)">
         <path
           d="M30 33.5156C30.9708 33.5156 31.7578 32.7286 31.7578 31.7578C31.7578 30.787 30.9708 30 30 30C29.0292 30 28.2422 30.787 28.2422 31.7578C28.2422 32.7286 29.0292 33.5156 30 33.5156Z"
           fill="#B59945"

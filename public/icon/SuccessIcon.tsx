@@ -11,7 +11,7 @@ export const SuccessIcon = ({ className = "" }) => {
       viewBox='0 0 64 64'
       fill='none'
       className={className}>
-      <g clip-path='url(#clip0_4319_113)'>
+      <g clipPath='url(#clip0_4319_113)'>
         <path
           d='M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64Z'
           fill='#B59945'

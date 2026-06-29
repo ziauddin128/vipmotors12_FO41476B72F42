@@ -1,112 +1,77 @@
+/** @format */
+
 import React from "react";
 import { FormDataType } from "./SurveyForm";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { useFormContext } from "react-hook-form";
+import { MapPin } from "lucide-react";
+
+const popularFlCities = [
+  "Miami",
+  "Fort Lauderdale",
+  "Sunny Isles",
+  "Aventura",
+  "Brickell",
+  "Tampa",
+  "Orlando",
+  "West Palm Beach",
+];
 
 export default function Step6() {
   const {
+    register,
     setValue,
     watch,
-    register,
     formState: { errors },
   } = useFormContext<FormDataType>();
 
-  const selectedState = watch("state");
-
-  const state = [
-    {
-      label: "miami",
-      value: "Miami",
-    },
-    {
-      label: "sunn-isles",
-      value: "Sunny Isles",
-    },
-    {
-      label: "aventura",
-      value: "Aventura",
-    },
-    {
-      label: "brickell",
-      value: "Brickell",
-    },
-    {
-      label: "fort-lauderdale",
-      value: "Fort Lauderdale",
-    },
-    {
-      label: "Other",
-      value: "Other",
-    },
-  ];
+  const currentLocation = watch("location");
 
   return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <Label className="text-base font-medium">
-          Where are you located?<span className="text-Primary-Color">*</span>
-        </Label>
+    <div>
+      <p className='text-base md:text-lg font-medium text-gray-800 mb-1'>
+        City or ZIP Code in Florida <span className='text-Primary-Color'>*</span>
+      </p>
+      <p className='text-xs text-gray-500 mb-4'>Confirms your free white-glove doorstep delivery area in Florida.</p>
 
-        <div className="mt-3 flex flex-col gap-4">
-          <RadioGroup
-            value={selectedState}
-            onValueChange={(value) => {
-              setValue("state", value, { shouldValidate: true });
-              if (value !== "Other")
-                setValue("otherState", "", { shouldValidate: true });
-            }}
-          >
-            {state.map((item, idx) => (
-              <div key={idx} className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value={item.value}
-                  className="cursor-pointer  data-[state=checked]:border-2 data-[state=checked]:border-Primary-Color custom-accent"
-                  id={item.label}
-                />
-                <Label
-                  htmlFor={item.label}
-                  className="text-base cursor-pointer"
-                >
-                  {item.value}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
+      <div className="relative mb-4">
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500 z-10">
+          <MapPin className="w-5 h-5 text-gray-500" />
         </div>
 
-        {errors.state && <p className="error-msg">{errors.state.message}</p>}
+        <Input
+          className="custom-input text-lg text-black py-3 pl-[44px]!"
+          style={{ paddingLeft: "44px" }}
+          placeholder="e.g. Miami, 33139, Fort Lauderdale..."
+          {...register("location", {
+            required: "City or ZIP code in Florida is required",
+          })}
+        />
       </div>
 
-      {/* Hidden State Input */}
-      <input
-        type="hidden"
-        {...register("state", { required: "Select your location" })}
-      />
-
-      {/* Conditional "Other" input */}
-      {selectedState === "Other" && (
-        <div className="mt-4">
-          <Label className="text-base font-medium">
-            Others<span className="text-Primary-Color">*</span>
-          </Label>
-          <Input
-            className="custom-input"
-            placeholder="location"
-            {...register("otherState", {
-              validate: (value) =>
-                selectedState !== "Other" ||
-                value.trim().length > 0 ||
-                "Please enter your location",
-            })}
-          />
-
-          {errors.otherState && (
-            <p className="error-msg">{errors.otherState.message}</p>
-          )}
-        </div>
+      {errors.location && (
+        <p className='error-msg text-sm mb-3 text-red-500'>{errors.location.message}</p>
       )}
+
+      <div>
+        <p className='text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2'>
+          Popular Delivery Hubs:
+        </p>
+        <div className='flex flex-wrap gap-2'>
+          {popularFlCities.map((city) => (
+            <button
+              key={city}
+              type='button'
+              onClick={() => setValue("location", city, { shouldValidate: true })}
+              className={`text-xs md:text-sm px-3 py-1.5 rounded-full border transition-all cursor-pointer ${currentLocation === city
+                ? "bg-Primary-Color text-white border-Primary-Color shadow-sm"
+                : "bg-gray-50 text-gray-700 border-gray-200 hover:border-Primary-Color hover:bg-amber-50"
+                }`}>
+              {city}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

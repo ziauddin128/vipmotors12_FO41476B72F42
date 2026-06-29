@@ -1,238 +1,224 @@
-
 "use client";
-import { Button } from "antd";
-import React, { useEffect, useState } from "react";
-import { FC } from "react";
+
+import React, { useEffect, useState, FC, Suspense } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Swal from "sweetalert2";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import Step1 from "./Step1";
 import Step2 from "./step2";
 import Step3 from "./step3";
 import Step4 from "./step4";
 import Step6 from "./step6";
-import Step7 from "./step7";
 import Step5 from "./step5";
 
-import { usePathname, useRouter } from "next/navigation";
+export type FormDataType = {
+  carMake: string;
+  vehicleType: string;
+  timeFrame: string;
+  creditRange: string;
+  location: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+};
 
 const steps: {
   title: string;
   Component: FC;
   fields: (keyof FormDataType)[];
 }[] = [
-    { title: "Step 1", Component: Step1, fields: ["carMake"] },
-    { title: "Step 2", Component: Step2, fields: ["carModel"] },
-    { title: "Step 3", Component: Step3, fields: ["budgetRange"] },
-    {
-      title: "Step 4",
-      Component: Step4,
-      fields: ["creditRange", "timeFrame"]
-    },
-    { title: "Step 6", Component: Step6, fields: ["state", "otherState"] },
-    { title: "Step 7", Component: Step7, fields: ["zipcode"] },
-    {
-      title: "Step 5",
-      Component: Step5,
-      fields: ["fullName", "email", "phoneNumber"],
-    },
-  ];
+  { title: "Vehicle Make", Component: Step1, fields: ["carMake"] },
+  { title: "Vehicle Type", Component: Step2, fields: ["vehicleType"] },
+  { title: "Timeline", Component: Step3, fields: ["timeFrame"] },
+  { title: "Credit Qualifier", Component: Step4, fields: ["creditRange"] },
+  { title: "Delivery Area", Component: Step6, fields: ["location"] },
+  { title: "Contact Info", Component: Step5, fields: ["fullName", "phoneNumber", "email"] },
+];
 
-export type FormDataType = {
-  carMake: string;
-  carModel: string;
-  budgetRange: string;
-  creditRange: string;
-  timeFrame: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  state: string;
-  otherState: string;
-  zipcode: string;
-};
-
-export default function SurveyForm() {
+function SurveyFormInner() {
   const [disableButton, setDisableButton] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const methods = useForm<FormDataType>({
     defaultValues: {
       carMake: "",
-      carModel: "",
-      budgetRange: "",
-      creditRange: "",
+      vehicleType: "",
       timeFrame: "",
+      creditRange: "",
+      location: "",
       fullName: "",
       email: "",
       phoneNumber: "",
-      state: "",
-      otherState: "",
-      zipcode: "",
     },
     mode: "onTouched",
     shouldUnregister: false,
   });
 
-  const { handleSubmit, trigger, reset } = methods;
-
+  const { handleSubmit, trigger } = methods;
   const [current, setCurrent] = useState(0);
-  const ActiveStep = steps[current].Component;
 
-  const next = async () => {
+  const ActiveStep = steps[current].Component;
+  const progressPercent = Math.round(((current + 1) / steps.length) * 100);
+
+  const next = async (e: React.MouseEvent) => {
+    e.preventDefault();
     const valid = await trigger(steps[current].fields);
     if (!valid) return;
     setCurrent((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
-  const prev = () => {
+  const prev = (e: React.MouseEvent) => {
+    e.preventDefault();
     setCurrent((prev) => Math.max(prev - 1, 0));
   };
 
-  // Form Submission
   const onSubmit = async (data: FormDataType) => {
     setDisableButton(true);
-    const from = pathname.includes("florida")
-      ? "florida"
-      : pathname.includes("chicago")
-        ? "chicago"
-        : "florida";
-    try {
-      console.log("Submitting:", data);
 
+    const utmSource = searchParams ? searchParams.get("utm_source") || "direct" : "direct";
+    const utmMedium = searchParams ? searchParams.get("utm_medium") || "" : "";
+    const utmCampaign = searchParams ? searchParams.get("utm_campaign") || "" : "";
+    const utmTerm = searchParams ? searchParams.get("utm_term") || "" : "";
+    const utmContent = searchParams ? searchParams.get("utm_content") || "" : "";
+
+    try {
       const formattedData = {
-         contact: {
+        contact: {
           fullname: data.fullName,
           email: data.email,
           phone: data.phoneNumber,
-          location: data.state === "Other" ? data.otherState : data.state,
-          "zip-code": data.zipcode,
+          location: data.location,
           "credit-score-range": data.creditRange,
-          "timeframe": data.timeFrame,
+          timeframe: data.timeFrame,
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          utm_term: utmTerm,
+          utm_content: utmContent,
         },
         vehicle: {
-          name: data.carMake,
-          model: data.carModel,
-          budget_range: data.budgetRange,
-     
+          make: data.carMake,
+          type: data.vehicleType,
         },
       };
 
-      console.log("Formatted data:", formattedData);
+      console.log("Submitting lead to GHL:", formattedData);
 
-      const response = await fetch(
+      await fetch(
         "https://services.leadconnectorhq.com/hooks/N5ckr1LzkF1akGRPJvlC/webhook-trigger/702a517b-6808-481e-8179-3bc64a02d38e",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formattedData),
-        },
+        }
       );
-      if (!response.ok) {
-        throw new Error("Submission failed");
+
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "Lead", {
+          content_name: data.vehicleType + " - " + data.carMake,
+          currency: "USD",
+          value: 0.0,
+        });
       }
 
-      // ✅ SUCCESS → thank you page
-      // router.push(`/thank-you?from=${from}`);
-
-      reset();
-      setCurrent(0);
+      const fromParam = pathname.includes("chicago") ? "chicago" : "florida";
+      router.push(`/thank-you?from=${fromParam}`);
     } catch (error) {
       console.error("Form submission error:", error);
+      const fromParam = pathname.includes("chicago") ? "chicago" : "florida";
+      router.push(`/thank-you?from=${fromParam}`);
     } finally {
       setDisableButton(false);
     }
   };
 
-  // const result = await response.json();
-
-  // if (response.ok) {
-  //   Swal.fire({
-  //     title: "Success!",
-  //     text: "Thank you for taking the time to complete our survey!",
-  //     icon: "success",
-  //     confirmButtonText: "Ok",
-  //   }).then(() => {
-  //     if (pathname === "florida/thank-you") {
-  //       router.push("florida/thank-you");
-  //     } else {
-  //       router.push("florida/thank-you");
-  //     }
-  //   });
-
-  //   reset();
-  //   setCurrent(0);
-  // } else {
-  //   Swal.fire({
-  //     title: "Error!",
-  //     text: result.message || "Something went wrong. Please try again.",
-  //     icon: "error",
-  //     confirmButtonText: "Ok",
-  //   });
-  // }
-
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && current < steps.length - 1) {
-            e.preventDefault();
-          }
-        }}>
-        <div className='flex justify-end'>
-          <div className='bg-white max-w-[585px] w-full rounded overflow-hidden pb-6 -mt-7'>
-            {/* Headline */}
-            <div className='rounded rounded-bl-none rounded-br-none bg-Primary-Color text-center py-3 px-6'>
-              <h1 className='text-white text-base md:text-[24px] font-medium'>
-                Tell Us About Your Ideal Car
-              </h1>
-            </div>
+      <div id='qualify-form' className='max-w-[620px] w-full mx-auto shadow-2xl rounded-xl overflow-hidden bg-white border border-gray-100'>
+        <div className='bg-Primary-Color text-center py-4 px-6 text-white'>
+          <h2 className='text-lg md:text-2xl font-bold tracking-wide uppercase'>
+            Get Pre-Qualified in 60 Seconds
+          </h2>
+          <p className='text-xs md:text-sm text-amber-100 mt-1'>
+            Fast Approvals • Zero Obligation • Doorstep Florida Delivery
+          </p>
+        </div>
 
-            {/* Step */}
-            {/* <div className="p-6">{steps[current].content}</div> */}
-
-            <div className='p-6'>
-              {/* <ActiveStep formData={formData} setFormData={setFormData} /> */}
-              <ActiveStep />
-            </div>
-
-            {/* Next/Prev Button */}
-            <div className='px-6 flex flex-wrap gap-4 justify-between'>
-              {current > 0 && (
-                <Button
-                  onClick={prev}
-                  className={`w-full sm:w-fit cursor-pointer flex items-center justify-center font-normal! bg-white! py-2! px-2! sm:px-4! h-12! outline-0! rounded! text-base! sm:text-lg! text-Primary-Color! border-Primary-Color!`}>
-                  <ArrowLeft />
-                  <span>Previous </span>
-                </Button>
-              )}
-              {current < steps.length - 1 ?
-                <>
-                  <div></div>
-                  <button
-                    onClick={next}
-                    className={`w-full sm:w-fit cursor-pointer flex items-center justify-center font-normal! bg-Primary-Color! py-2! px-2! sm:px-4! h-12! outline-0! border-0! rounded! text-base! sm:text-lg! text-white!`}>
-                    <span>Get Approved in Minutes</span>
-                    <ArrowRight />
-                  </button>
-                </>
-              : <button
-                  type='submit'
-                  disabled={disableButton}
-                  className={` ${disableButton
-                    ? "opacity-50 cursor-not-allowed"
-                    : "cursor-pointer"
-                    } cursor-pointer w-full sm:w-fit font-normal! bg-Primary-Color! py-2! px-2! sm:px-4! h-12! outline-0! border-0! rounded! text-base! sm:text-lg! text-white!`}>
-                  Get Approved in Minutes
-                </button>
-              }
-            </div>
+        <div className='bg-gray-50 px-6 pt-4 pb-2 border-b border-gray-100'>
+          <div className='flex justify-between items-center text-xs font-semibold text-gray-600 mb-1.5'>
+            <span>Step {current + 1} of {steps.length}: <strong className='text-Primary-Color'>{steps[current].title}</strong></span>
+            <span>{progressPercent}% Complete</span>
+          </div>
+          <div className='w-full bg-gray-200 h-2 rounded-full overflow-hidden'>
+            <div
+              className='bg-Primary-Color h-full transition-all duration-300 ease-out rounded-full'
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
         </div>
-      </form>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && current < steps.length - 1) {
+              e.preventDefault();
+            }
+          }}>
+          <div className='p-6 md:p-8 min-h-[290px] flex flex-col justify-between'>
+            <ActiveStep />
+          </div>
+
+          <div className='px-6 md:px-8 pb-6 pt-2 flex items-center justify-between gap-4 border-t border-gray-100 bg-gray-50/50'>
+            {current > 0 ? (
+              <button
+                type='button'
+                onClick={prev}
+                className='cursor-pointer flex items-center gap-1.5 font-medium text-gray-700 bg-white hover:bg-gray-100 py-2.5 px-4 rounded-lg text-sm border border-gray-300 transition-colors'>
+                <ArrowLeft className='w-4 h-4' />
+                <span>Back</span>
+              </button>
+            ) : (
+              <div />
+            )}
+
+            {current < steps.length - 1 ? (
+              <button
+                type='button'
+                onClick={next}
+                className='cursor-pointer flex items-center justify-center gap-2 font-semibold bg-Primary-Color hover:bg-amber-600 py-3 px-6 rounded-lg text-base text-white shadow-md transition-all ml-auto'>
+                <span>Next Question</span>
+                <ArrowRight className='w-4 h-4' />
+              </button>
+            ) : (
+              <button
+                type='submit'
+                disabled={disableButton}
+                className={`flex items-center justify-center gap-2 font-bold bg-emerald-600 hover:bg-emerald-700 py-3.5 px-8 rounded-lg text-base md:text-lg text-white shadow-lg transition-all ml-auto ${
+                  disableButton ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
+                }`}>
+                <CheckCircle2 className='w-5 h-5' />
+                <span>{disableButton ? "Submitting..." : "Get Approved & View Inventory"}</span>
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
     </FormProvider>
+  );
+}
+
+export default function SurveyForm() {
+  return (
+    <Suspense fallback={
+      <div className='max-w-[620px] w-full mx-auto p-8 bg-white rounded-xl shadow-xl text-center'>
+        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-Primary-Color mx-auto mb-4'></div>
+        <p className='text-sm text-gray-600'>Loading qualification form...</p>
+      </div>
+    }>
+      <SurveyFormInner />
+    </Suspense>
   );
 }

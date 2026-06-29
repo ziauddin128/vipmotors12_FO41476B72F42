@@ -21,13 +21,13 @@ export default function Step7() {
           </Label>
           <Input
             className='mt-3 custom-input'
-            {...register("zipcode", {
+            {...register("location", {
               required: "Zip Code is required",
             })}
           />
 
-          {errors.zipcode && (
-            <p className='error-msg'>{errors.zipcode.message}</p>
+          {errors.location && (
+            <p className='error-msg'>{errors.location.message}</p>
           )}
         </div>
       </div>

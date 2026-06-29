@@ -434,12 +434,16 @@ export default function Vehicle() {
                   </div>
                 </div>
 
-                <Link
-                  href="tel:01521454545"
-                  className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200"
+                <a
+                  href="#qualify-form"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("qualify-form")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200 cursor-pointer block"
                 >
                   Start Free Consultation
-                </Link>
+                </a>
               </div>
             ))}
           </div>
