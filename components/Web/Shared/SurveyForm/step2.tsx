@@ -1,89 +1,70 @@
-import React from "react";
+/** @format */
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import React from "react";
 import { FormDataType } from "./SurveyForm";
 import { useFormContext } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Car, Truck, Shield, Sparkles, HelpCircle } from "lucide-react";
+
+const vehicleTypes = [
+  { label: "SUV", value: "SUV", icon: Car, desc: "Luxury & Full-size SUVs" },
+  { label: "Sedan", value: "Sedan", icon: Car, desc: "Luxury Sport & Executive Sedans" },
+  { label: "Truck", value: "Truck", icon: Truck, desc: "Premium Pickups & Utility" },
+  { label: "Luxury / Exotic", value: "Luxury", icon: Sparkles, desc: "High-end & Performance" },
+  { label: "Not sure yet", value: "Not sure", icon: HelpCircle, desc: "Guide me to best options" },
+];
 
 export default function Step2() {
   const {
+    register,
     setValue,
     watch,
-    register,
     formState: { errors },
   } = useFormContext<FormDataType>();
 
-  const selectedBudget = watch("budget");
+  const selectedType = watch("vehicleType");
 
   return (
     <div>
-      <p className="mt-6 text-lg font-medium mb-3">
-        What is your estimated budget range?
-        <span className="text-Primary-Color">*</span>
+      <p className='text-base md:text-lg font-medium text-gray-800 mb-4'>
+        What type of vehicle are you interested in? <span className='text-Primary-Color'>*</span>
       </p>
 
-      <Select
-        value={selectedBudget}
-        onValueChange={(value) => {
-          setValue("budget", value, { shouldValidate: true });
-          if (value !== "Other")
-            setValue("budgetOther", "", { shouldValidate: true });
-        }}
-      >
-        <SelectTrigger className="w-full custom-input cursor-pointer">
-          <SelectValue placeholder="Select your range" />
-        </SelectTrigger>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+        {vehicleTypes.map((item) => {
+          const Icon = item.icon;
+          const isSelected = selectedType === item.value;
+          return (
+            <button
+              key={item.value}
+              type='button'
+              onClick={() => setValue("vehicleType", item.value, { shouldValidate: true })}
+              className={`flex items-center gap-3 p-3.5 rounded-lg border-2 text-left transition-all cursor-pointer ${
+                isSelected
+                  ? "border-Primary-Color bg-amber-50/60 shadow-sm"
+                  : "border-gray-200 bg-white hover:border-amber-300 hover:bg-gray-50"
+              }`}>
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                  isSelected ? "bg-Primary-Color text-white" : "bg-gray-100 text-gray-600"
+                }`}>
+                <Icon className='w-5 h-5' />
+              </div>
+              <div>
+                <p className='font-semibold text-sm sm:text-base text-gray-900'>{item.label}</p>
+                <p className='text-xs text-gray-500'>{item.desc}</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
 
-        <SelectContent position="popper">
-          <SelectItem value="$500-$999">$500-$999</SelectItem>
-          <SelectItem value="$1000-$1499">$1000-$1499</SelectItem>
-          <SelectItem value="$1500-$1999">$1500-$1999</SelectItem>
-          <SelectItem value="$2000-$2499">$2000-$2499</SelectItem>
-          <SelectItem value="$2500-$2999">$2500-$2999</SelectItem>
-          <SelectItem value="$3000-$3499">$3000-$3499</SelectItem>
-          <SelectItem value="$3500-$3999">$3500-$3999</SelectItem>
-          <SelectItem value="$4000+">$4000+</SelectItem>
-          <SelectItem value="Other">Other</SelectItem>
-        </SelectContent>
-      </Select>
-
-      {errors.budget && <p className="error-msg">{errors.budget.message}</p>}
-
-      {/* Hidden Budget Input */}
       <input
-        type="hidden"
-        {...register("budget", { required: "Budget range is required" })}
+        type='hidden'
+        {...register("vehicleType", { required: "Please select a vehicle type" })}
       />
 
-      {/* Conditional "Other" input */}
-      {selectedBudget === "Other" && (
-        <div className="mt-4">
-          <Label className="text-base font-medium">
-            Others<span className="text-Primary-Color">*</span>
-          </Label>
-
-          <Input
-            className="mt-3 custom-input"
-            placeholder="Enter your range"
-            {...register("budgetOther", {
-              validate: (value) =>
-                selectedBudget !== "Other" ||
-                value.trim().length > 0 ||
-                "Please enter your budget",
-            })}
-          />
-
-          {errors.budgetOther && (
-            <p className="error-msg">{errors.budgetOther.message}</p>
-          )}
-        </div>
+      {errors.vehicleType && (
+        <p className='error-msg text-sm mt-2 text-red-500'>{errors.vehicleType.message}</p>
       )}
     </div>
   );

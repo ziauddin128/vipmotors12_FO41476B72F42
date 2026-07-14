@@ -88,13 +88,13 @@ export default function Footer() {
 
             <div className="flex flex-col gap-4">
               <Link
-                href="tel:+14161234567"
+                href="tel:+13055550199"
                 className="flex items-center gap-3 text-[#FBFBFB]"
               >
                 <div className="min-w-10 w-10 h-10 p-1 flex items-center justify-center rounded-full border border-dashed border-white">
                   <Phone className="h-5 w-5" />
                 </div>
-                <span>+1 (416) 123-4567</span>
+                <span>+1 (305) 555-0199</span>
               </Link>
 
               <Link

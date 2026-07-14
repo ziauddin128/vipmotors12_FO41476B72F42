@@ -360,7 +360,7 @@ export default function Vehicle() {
             Featured <span className="text-Primary-Color">Vehicle</span> Deals
           </h1>
           <p className="text-base md:text-lg">
-            Hot Deals on Luxury Vehicles in South Florida
+            Hot Deals on Luxury Vehicles in Chicago
           </p>
         </div>
 
@@ -377,9 +377,8 @@ export default function Vehicle() {
             <button
               key={item.value}
               onClick={() => setActiveBrand(item.value)}
-              className={`text-base font-medium whitespace-nowrap  ${
-                activeBrand === item.value ? "bg-Primary-Color text-white" : ""
-              }  py-2.5 px-5 rounded-lg cursor-pointer`}
+              className={`text-base font-medium whitespace-nowrap  ${activeBrand === item.value ? "bg-Primary-Color text-white" : ""
+                }  py-2.5 px-5 rounded-lg cursor-pointer`}
             >
               {item.label}
             </button>
@@ -434,16 +433,12 @@ export default function Vehicle() {
                   </div>
                 </div>
 
-                <a
-                  href="#qualify-form"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("qualify-form")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200 cursor-pointer block"
+                <Link
+                  href="tel:01521454545"
+                  className="bg-Primary-Color py-2 px-4 rounded text-center text-base font-medium text-White-Color hover:opacity-[.9] transition duration-200"
                 >
                   Start Free Consultation
-                </a>
+                </Link>
               </div>
             ))}
           </div>

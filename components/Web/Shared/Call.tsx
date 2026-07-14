@@ -1,25 +1,35 @@
+/** @format */
+
 import React from "react";
 import Link from "next/link";
-import { Phone } from "lucide-react";
+import { Phone, FileText } from "lucide-react";
 
 export default function Call() {
+  const scrollToForm = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById("qualify-form");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <Link
-      href="tel:+14161234567"
-      className="sm:hidden z-3 fixed bottom-0 left-0 w-full bg-Primary-Color py-3 px-2 rounded-md rounded-bl-none rounded-br-none"
-    >
-      <div className="flex items-center justify-center gap-3 text-white ">
-        <div className="relative w-10 h-10 flex items-center justify-center">
-          <span className="absolute inset-0 rounded-full border border-dashed border-white animate-[spin_6s_linear_infinite]"></span>
-          <Phone className="h-5 w-5 text-white" />
-        </div>
+    <div className='sm:hidden fixed bottom-0 left-0 right-0 z-50 p-2.5 bg-gray-950/95 backdrop-blur-md border-t border-amber-500/30 shadow-2xl'>
+      <div className='flex items-center gap-2 max-w-md mx-auto'>
+        <a
+          href='tel:+13055550199'
+          className='flex-1 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 py-3 px-3 rounded-xl text-black font-bold flex items-center justify-center gap-2 text-sm shadow-lg transition-all'>
+          <Phone className='w-4 h-4 fill-black' />
+          <span>Call / Text Us</span>
+        </a>
 
-        <span className="text-base font-medium">14161234567</span>
+        <button
+          onClick={scrollToForm}
+          className='flex-1 bg-white hover:bg-gray-100 active:bg-gray-200 py-3 px-3 rounded-xl text-gray-900 font-bold flex items-center justify-center gap-2 text-sm shadow-lg transition-all cursor-pointer'>
+          <FileText className='w-4 h-4 text-Primary-Color' />
+          <span>Get Approved</span>
+        </button>
       </div>
-
-      <p className="text-center mt-2 text-sm text-white">
-        Call or text - fastest way to get approved.
-      </p>
-    </Link>
+    </div>
   );
 }
